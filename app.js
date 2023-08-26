@@ -16,8 +16,8 @@ app.post('/enviar-email', (req, res) => {
     port: '587',
     secure: false, // true for 465 else false for others
     auth: {
-        user: "dener_bat@outlook.com",
-        pass: "Mara123#"
+        user: "seu-email",
+        pass: "sua-senha"
     }
 })
 
