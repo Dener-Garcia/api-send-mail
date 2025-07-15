@@ -105,11 +105,14 @@ const totalInCents = serviceValues.reduce((acc, curr) => {
     </table>
         `
 
-    filesAttachments = files.map(file => ({
-        filename: file.originalname,
-        path: file.path
-    }));
-console.log(filesAttachments)
+        if (filesAttachments.length >= 1){
+
+            filesAttachments = files.map(file => ({
+                filename: file.originalname,
+                path: file.path
+            }));
+            console.log(filesAttachments)
+        }
 
        const emailAuth = smtpEmail.nodemailerConfig(
             process.env.AMPER_TECH_LOGIN, 
@@ -132,13 +135,14 @@ console.log(filesAttachments)
         console.log("email orcamento Amper Tech enviado")
         return response
     } catch (error) {
+        console.log("error server", error)
         await deleteUploadedFiles(filesAttachments)
-        throw error
+        return error
     }
 }
 
 async function contactAmperTech (fields){
-
+console.log( fields)
     try {
         let htmlContact = `
               <div style="background-color: #f2b10d; padding: 2rem;">
@@ -181,19 +185,19 @@ async function contactAmperTech (fields){
 
       const emailOptions = smtpEmail.nodemailerEmailOptions(
         `Amper Tech <${process.env.AMPER_TECH_LOGIN}>`,
-        process.env.AMPER_TECH_LOGIN,
+        'contato@ampertech.com.br',
             'gabrielfrancaferreira2004@gmail.com',
             `Contato Amper Tech`,
-            htmlContact
+            htmlContact,
+            null
         )
 
         const response = await emailAuth.sendMail(emailOptions);
-
-        
-        console.log("email contato Amper Tech enviado")
+        console.log("email contato Amper Tech enviado", response)
         return response
     } catch (error) {
-        throw error
+        console.log(error)
+        return error
     }
 }
 
