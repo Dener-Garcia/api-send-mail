@@ -137,7 +137,7 @@ console.log(filesAttachments)
     }
 }
 
-async function contactPageAmperTech (fields){
+async function contactAmperTech (fields){
 
     try {
         let htmlContact = `
@@ -181,8 +181,8 @@ async function contactPageAmperTech (fields){
 
       const emailOptions = smtpEmail.nodemailerEmailOptions(
         `Amper Tech <${process.env.AMPER_TECH_LOGIN}>`,
-            fields.mail,
-            null,
+        process.env.AMPER_TECH_LOGIN,
+            'gabrielfrancaferreira2004@gmail.com',
             `Contato Amper Tech`,
             htmlContact
         )
@@ -199,5 +199,5 @@ async function contactPageAmperTech (fields){
 
 module.exports = {
     serviceOrderAmperTech,
-    contactPageAmperTech
+    contactAmperTech
 }
