@@ -4,12 +4,10 @@ const validateFields = require('../utils/validateFields')
 const sendMailService = require("../services/send.mail.service")
 
 async function contactAmperTech(req, res) {
-    console.log(req.files)
-
     const dataFormContact = req.body
     try {
         validateFields.checkFields(dataFormContact)
-        const result = customersMailService.contactAmperTech(req.body, req.files)
+        const result = customersMailService.contactAmperTech(req.body)
         res.status(200).json({ message: result })
     } catch (error) {
         //console.log(error)
