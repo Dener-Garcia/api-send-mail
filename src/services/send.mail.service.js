@@ -112,12 +112,12 @@ const totalInCents = serviceValues.reduce((acc, curr) => {
 console.log(filesAttachments)
 
        const emailAuth = smtpEmail.nodemailerConfig(
-            process.env.CRIARBR_LOGIN, 
-            process.env.CRIARBR_PASSWORD
+            process.env.AMPER_TECH_LOGIN, 
+            process.env.AMPER_TECH_PASSWORD
         )
 
       const emailOptions = smtpEmail.nodemailerEmailOptions(
-        `Amper Tech <${process.env.CRIARBR_LOGIN}>`,
+        `Amper Tech <${process.env.AMPER_TECH_LOGIN}>`,
             fields.mail,
             null,
             `Orçamento Amper Tech - ${idOrder}`,
@@ -129,7 +129,7 @@ console.log(filesAttachments)
 
         await deleteUploadedFiles(files)
         
-        console.log("chegou controler", files, "meus arquivos", filesAttachments)
+        console.log("email orcamento Amper Tech enviado")
         return response
     } catch (error) {
         await deleteUploadedFiles(filesAttachments)
@@ -137,6 +137,67 @@ console.log(filesAttachments)
     }
 }
 
+async function contactPageAmperTech (fields){
+
+    try {
+        let htmlContact = `
+              <div style="background-color: #f2b10d; padding: 2rem;">
+    <h2 style="color: #161513; text-align: center; font-size: 1.5rem;">Novo Contato Recebido</h2>
+</div>
+
+<div style="max-width: 40rem; margin: auto; margin-top: 2rem;">
+    <div style="background-color: #f6f5f4; padding: 1rem; font-size: 1.5rem;">
+        <strong>Informações do Contato</strong>
+    </div>
+
+    <!-- Nome -->
+    <div style="padding: 1rem; border: 1px solid #ddd; margin-bottom: 1rem;">
+        <strong style="color: #58544b; font-size: 1rem;">Nome:</strong>
+        <p style="color: #030303; font-size: 1rem;">${fields.name}</p>
+    </div>
+
+    <!-- Telefone -->
+    <div style="padding: 1rem; border: 1px solid #ddd; margin-bottom: 1rem;">
+        <strong style="color: #58544b; font-size: 1rem;">Telefone:</strong>
+        <p style="color: #030303; font-size: 1rem;">${fields.phone}</p>
+    </div>
+
+    <!-- Mensagem -->
+    <div style="padding: 1rem; border: 1px solid #ddd; margin-bottom: 1rem;">
+        <strong style="color: #58544b; font-size: 1rem;">Mensagem:</strong>
+        <p style="color: #030303; font-size: 1rem;">${fields.message}</p>
+    </div>
+
+    <div style="text-align: center; margin-top: 1rem;">
+        <p style="color: #989ba0; font-size: 1rem;">Este é um formulário de contato enviado através do seu site ampertech.com.br</p>
+    </div>
+</div>
+        `
+
+       const emailAuth = smtpEmail.nodemailerConfig(
+            process.env.AMPER_TECH_LOGIN, 
+            process.env.AMPER_TECH_PASSWORD
+        )
+
+      const emailOptions = smtpEmail.nodemailerEmailOptions(
+        `Amper Tech <${process.env.AMPER_TECH_LOGIN}>`,
+            fields.mail,
+            null,
+            `Contato Amper Tech`,
+            htmlContact
+        )
+
+        const response = await emailAuth.sendMail(emailOptions);
+
+        
+        console.log("email contato Amper Tech enviado")
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
-    serviceOrderAmperTech
+    serviceOrderAmperTech,
+    contactPageAmperTech
 }

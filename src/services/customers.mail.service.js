@@ -1,9 +1,5 @@
-async function contactAmperTech(data, fil) {
+async function contactAmperTech(data) {
 
-    const anexos = fil.map(file => ({
-        filename: file.originalname,
-        path: file.path
-    }));
 
     try {
         console.log("dentro do service", data, anexos)

@@ -9,8 +9,10 @@ app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-app.post("/contact-amper-tech", saveFilesMidleware.saveFiles(2), sendMailController.contactAmperTech)
+app.post("/contact-amper-tech", sendMailController.contactAmperTech)
 app.post("/service-order", saveFilesMidleware.saveFiles(10), sendMailController.serviceOrderAmperTech)
+
+app.get("/", (req, res) => res.status(200).send("Api running"))
 
 app.listen(3010, () => {
   console.log('Servidor backend online!');
