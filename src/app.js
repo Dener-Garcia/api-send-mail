@@ -12,6 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 app.post("/contact-amper-tech", saveFilesMidleware.saveFiles(2), sendMailController.contactAmperTech)
 app.post("/service-order", saveFilesMidleware.saveFiles(10), sendMailController.serviceOrderAmperTech)
 
-app.listen(3002, () => {
+app.listen(3010, () => {
   console.log('Servidor backend online!');
 });
